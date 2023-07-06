@@ -7,7 +7,7 @@ This is a template of a monorepo that runs a Remix app and a Slack (Bolt JS) app
 1. Internal packages in a ES Module and Typescript format instead of CJS, ensuring that stack traces surfaced in these internal packages as they're used in the apps appear with proper line numbers tying them back to the Typescript files (not the compiled Javascript ones). This is not a feature that exists in the official Turborepo examples that provides a significant ergonomic improvement
 1. A Prisma internal package that's properly compiled and loaded in both apps (Remix and Bolt). Note that Prisma is no longer my recommended ORM due to its lack of joins; I'll be using Drizzle ORM in future iterations of this template instead.
 1. Shared ESLint and TSConfig files across all packages
-1. Deployment instructions for both the Remix and Bolt JS apps on (Fly)[fly.io], since the default instructions didn't work out-of-the-box
+1. Deployment instructions for both the Remix and Bolt JS apps on [Fly](fly.io), since the default instructions didn't work out-of-the-box
 1. Prettier setup across the entire repo
 1. Typescript/formatting checks using [lint-staged](https://github.com/okonet/lint-staged) and [husky](https://github.com/typicode/husky) on every commit
 1. Pre-set `DIRECT_URL` in addition to `DATABASE_URL` for DB connection pooling (implemented how Supabase recommends you implement it)
