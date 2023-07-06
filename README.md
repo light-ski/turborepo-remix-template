@@ -10,6 +10,7 @@ This is a template of a monorepo that runs a Remix app and a Slack (Bolt JS) app
 1. Deployment instructions for both the Remix and Bolt JS apps on (Fly)[fly.io], since the default instructions didn't work out-of-the-box
 1. Prettier setup across the entire repo
 1. Typescript/formatting checks using [lint-staged](https://github.com/okonet/lint-staged) and [husky](https://github.com/typicode/husky) on every commit
+1. Pre-set `DIRECT_URL` in addition to `DATABASE_URL` for DB connection pooling (implemented how Supabase recommends you implement it)
 
 This template is built for Lightski, so if you want to use it for your own team, make sure to replace `lightski` everywhere in this codebase with your own app name.
 
@@ -30,7 +31,7 @@ npm install
 ```
 
 1. Set up a local database by installing [Postgres.app](https://postgresapp.com/). The default database connection URL is `postgresql://postgres:example@localhost:5432/DB_NAME`
-1. Set `DATABASE_URL` and `DIRECT_URL` in both `.env` files to the connection URL. Note that you'll need to do this in all of the .env files you copied above.
+1. Set `DATABASE_URL` and `DIRECT_URL` in both `.env` files to the connection URL. Note that you'll need to do this in all of the .env files you copied above. If you're not using [connection pooling](https://www.prisma.io/docs/guides/database/supabase) with your database provider, you can ignore `DIRECT_URL`.
 1. Migrate your database to the current state by doing:
 
 ```sh
