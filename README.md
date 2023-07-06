@@ -104,7 +104,7 @@ If you're using VSCode, add the following to your `settings.json` to enable form
 
 This template includes instructions on how to deploy the apps to [Fly](fly.io).
 
-### Initial Setup (Ignore)
+### Initial Setup
 
 Follow the instructions to get set up with Fly.io [here](https://fly.io/docs/hands-on/install-fly/).
 Here's the things we had to do to get it running on the very first deploy.
