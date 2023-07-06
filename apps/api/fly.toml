@@ -1,0 +1,21 @@
+app = "MY_APP_NAME_HERE"
+primary_region = "sjc"
+
+[[services]]
+  # Slack Bolt listens on port 3000
+  internal_port = 3000
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+
+  [[services.tcp_checks]]
+    grace_period = "2s"
+    interval = "15s"
+    restart_limit = 2
+    timeout = "2s"

@@ -1,0 +1,81 @@
+# base node image
+FROM node:bullseye-slim as base
+
+# Install openssl for Prisma
+RUN apt-get update && apt-get install -y openssl
+
+# == Builder
+FROM base as builder
+RUN mkdir /app
+WORKDIR /app
+RUN npm install -g turbo
+COPY . .
+RUN turbo prune --scope=@lightski/api --docker
+
+# == Installer
+FROM base as installer
+RUN mkdir /app
+WORKDIR /app
+# Copy package.json over, install dependencies
+COPY .gitignore .gitignore
+COPY --from=builder /app/out/json/ .
+COPY --from=builder /app/out/package-lock.json ./package-lock.json
+RUN npm clean-install
+# Build the project
+COPY --from=builder /app/out/full/ .
+COPY turbo.json turbo.json
+RUN npx turbo run build --filter=@lightski/api
+
+# == Runner
+FROM base as runner
+WORKDIR /app
+ENV NODE_ENV=production
+# Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 express
+USER express
+
+COPY --from=installer --chown=express:nodejs /app/ ./
+
+WORKDIR /app
+
+CMD ["npm", "run", "start", "--workspace=@lightski/api"]
+
+
+## Below is the default Dockerfile created when you deploy an app to Fly.io
+## To get the Dockerfile above, we combined bits of the file below with the
+## Turborepo example Dockerfile available here:
+## https://github.com/vercel/turbo/blob/main/examples/with-docker/apps/web/Dockerfile
+
+# RUN npm install -g turbo
+
+# FROM debian:bullseye as builder
+
+# ENV PATH=/usr/local/node/bin:$PATH
+# ARG NODE_VERSION=19.8.1
+
+# RUN apt-get update; apt install -y curl python-is-python3 pkg-config build-essential && \
+#     curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
+#     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
+# rm -rf /tmp/node-build-master
+
+# RUN mkdir /app
+# WORKDIR /app
+
+# COPY . .
+
+# RUN npm install && npm run build
+
+
+# FROM debian:bullseye-slim
+
+# LABEL fly_launch_runtime="nodejs"
+
+# COPY --from=builder /usr/local/node /usr/local/node
+# COPY --from=builder /app /app
+
+# WORKDIR /app
+# ENV NODE_ENV production
+# ENV PATH /usr/local/node/bin:$PATH
+
+# CMD [ "npm", "run", "start" ]

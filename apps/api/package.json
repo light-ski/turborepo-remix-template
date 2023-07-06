@@ -1,0 +1,48 @@
+{
+  "name": "@lightski/api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf ./dist ./node_modules",
+    "dev": "nodemon",
+    "lint": "tsc --noEmit && eslint \"src/**/*.ts*\"",
+    "start": "node -r esbuild-register ./src/index.ts",
+    "test": "jest --detectOpenHandles",
+    "typecheck": "tsc --noEmit"
+  },
+  "jest": {
+    "preset": "jest-presets/jest/node"
+  },
+  "dependencies": {
+    "@lightski/constants": "*",
+    "@lightski/database": "*",
+    "@lightski/helpers": "*",
+    "@slack/bolt": "^3.12.2",
+    "@types/lodash": "^4.14.194",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.1",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "@lightski/eslint-config": "*",
+    "@lightski/tsconfig": "*",
+    "@types/body-parser": "^1.19.0",
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.12",
+    "@types/jest": "^26.0.22",
+    "@types/morgan": "^1.9.2",
+    "@types/node": "^18.11.9",
+    "@types/supertest": "^2.0.12",
+    "esbuild": "^0.15.18",
+    "esbuild-register": "^3.4.2",
+    "eslint": "^8.28.0",
+    "jest": "^26.6.3",
+    "supertest": "^6.2.4",
+    "tsup": "^6.3.0",
+    "typescript": "^4.8.3"
+  }
+}

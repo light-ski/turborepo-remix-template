@@ -1,0 +1,6 @@
+{
+  "exec": "node --enable-source-maps --require esbuild-register ./src/index.ts",
+  "ext": "ts,tsx,js,jsx,prisma",
+  "ignore": ["dist/"],
+  "watch": [".", ".env", "./../../packages/**/*"]
+}

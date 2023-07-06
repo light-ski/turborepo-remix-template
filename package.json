@@ -1,0 +1,35 @@
+{
+  "name": "@lightski/turborepo-remix-prisma-template",
+  "version": "1.0.0",
+  "description": "Turborepo, Remix, Bolt (Slack), and Prisma Monorepo Template for new projects that want to make use of these technologies. To use this template, clone the repo and replace all instances of `lightski` with your app name.",
+  "main": "index.js",
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "turbo run clean && rm -rf package-lock.json node_modules out",
+    "dev": "NODE_ENV=development turbo run dev",
+    "lint": "turbo run lint",
+    "prepare": "husky install",
+    "postinstall": "husky install",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck -v",
+    "start": "NODE_ENV=production turbo run start"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "@manypkg/cli": "^0.20.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "prettier-plugin-prisma": "^4.4.0",
+    "prettier-plugin-tailwindcss": "^0.3.0",
+    "tsconfig-paths": "^4.1.1"
+  }
+}
