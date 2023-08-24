@@ -1,16 +1,16 @@
-# Turborepo, Remix, Bolt (Slack) Monorepo Template
+# Turborepo, Remix, Drizzle ORM, Bolt (Slack) Monorepo Template
 
-This is a template of a monorepo that runs a Remix app and a Slack (Bolt JS) app, sharing internal packages (including Prisma), all managed by Turborepo, all in Typescript. I ran into some issues setting this up for Lightski, so I'm open-sourcing this template for others that want to run a similar setup. This template provides the following:
+This is a template of a monorepo that runs a Remix app and a Slack (Bolt JS) app, sharing internal packages (including Drizzle ORM), all managed by Turborepo, all in Typescript. I ran into some issues setting this up for Lightski, so I'm open-sourcing this template for others that want to run a similar setup. This template provides the following:
 
 1. A Remix app managed by Turborepo, importing internal packages, using Typescript and Tailwind, with watch paths and packages properly transpiled
 1. A Slack ([Bolt JS](https://slack.dev/bolt-js/tutorial/getting-started)) app managed by Turborepo, importing internal packages
 1. Internal packages in a ES Module and Typescript format instead of CJS, ensuring that stack traces surfaced in these internal packages as they're used in the apps appear with proper line numbers tying them back to the Typescript files (not the compiled Javascript ones). This is not a feature that exists in the official Turborepo examples that provides a significant ergonomic improvement
-1. A Prisma internal package that's properly compiled and loaded in both apps (Remix and Bolt). Note that Prisma is no longer my recommended ORM due to its lack of joins; I'll be using Drizzle ORM in future iterations of this template instead.
+1. A Drizzle ORM internal package that's properly compiled and loaded in the Remix app.
 1. Shared ESLint and TSConfig files across all packages
 1. Deployment instructions for both the Remix and Bolt JS apps on [Fly](fly.io), since the default instructions didn't work out-of-the-box
 1. Prettier setup across the entire repo
 1. Typescript/formatting checks using [lint-staged](https://github.com/okonet/lint-staged) and [husky](https://github.com/typicode/husky) on every commit
-1. Pre-set `DIRECT_URL` in addition to `DATABASE_URL` for DB connection pooling (implemented how Supabase recommends you implement it)
+1. Pre-set `DIRECT_URL` in addition to `DATABASE_URL` for DB connection pooling (implemented how Supabase recommends you implement it, though you might not need it for Drizzle ORM)
 
 This template is built for Lightski, so if you want to use it for your own team, make sure to replace `lightski` everywhere in this codebase with your own app name.
 
@@ -60,25 +60,24 @@ Turborepo enforces certain ways to install packages, even for routine tasks. Whe
 npm install PACKAGE_NAME --workspace={@lightski/remix, @lightski/api, @lightski/database, ...}
 ```
 
-### Database Migrations
-
-We use Prisma to communicate with the database and [do migrations](https://www.prisma.io/docs/concepts/components/prisma-migrate/migrate-development-production). Here's the steps to take to make a DB schema change:
-
-1. Update `schema.prisma` to the new schema.
-1. Navigate to the database package (`cd packages/database`)
-1. Run `npx prisma migrate dev --name OPTIONAL_MIGRATION_NAME`
-1. Edit the created `.sql` file and wrap it in a `BEGIN;` and `COMMIT;` block so that the migration is wrapped in a transaction for atomicity.
-1. Lastly, make sure the prisma schema file is formatted.
+If you run into any issues around package versions, use [manypkg](https://www.npmjs.com/package/@manypkg/cli) to fix them:
 
 ```sh
-# Format Prisma schema
-npx prisma format
-# or
+npx manypkg check
+npx manypkg fix
+```
+
+### Database Migrations
+
+We use Drizzle ORM to communicate with the database and `drizzle-kit` to [do migrations](https://orm.drizzle.team/docs/migrations). Here's the steps to take to make a DB schema change:
+
+**TBD**
+
+```sh
+# Format schema
 prettier --write .
 # or just commit the file--formatting commit hooks are run automatically
 ```
-
-1. If you need to migrate your prisma deployment, run `npx turbo db:migrate:dev`
 
 ### Editor Setup
 
@@ -94,10 +93,7 @@ If you're using VSCode, add the following to your `settings.json` to enable form
   "prettier.trailingComma": "all",
   "prettier.requireConfig": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
-  }
+  "editor.formatOnSave": true
 }
 ```
 
@@ -162,7 +158,7 @@ fly apps destroy FLY_BUILDER_NAME
 
 ### Production Migrations
 
-Handle all production migrations through Prisma.
+Handle all production migrations using Drizzle ORM.
 
 We do Production Migrations manually for now. Once we set up Github Actions/CI/CD pipeline, we'll automate them. Right now, there's not an easy way to do so from the docker container while it's building.
 
@@ -171,5 +167,5 @@ We do Production Migrations manually for now. Once we set up Github Actions/CI/C
 fly ssh console --app APP_NAME --select
 
 cd packages/database
-npx prisma migrate deploy
+# TBD
 ```

@@ -1,6 +1,6 @@
 {
   "exec": "npm run db:generate",
-  "ext": "prisma",
+  "ext": null,
   "ignore": "dist/",
   "watch": ["."]
 }

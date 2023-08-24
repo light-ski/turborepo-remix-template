@@ -2,9 +2,7 @@ export default {
   // Run prettier on all files
   "**/*": "prettier --write --ignore-unknown",
   // Run typecheck when TS or prisma files change
-  "**/*.{ts,tsx,prisma}": (files) => "npm run typecheck",
-  "packages/database/prisma/schema.prisma":
-    "npx prisma format --schema packages/database/prisma/schema.prisma",
+  "**/*.{ts,tsx}": (files) => "npm run typecheck",
   // TODO: All DB imports from the Remix codebase should import from
   // "apps/utils/db.server", to ensure we don't put database code in our client bundles.
   // We might need to write a script for this since we might not be able to fit it

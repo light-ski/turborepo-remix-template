@@ -1,6 +1,4 @@
-# Prisma Database Package
-
-Created via https://turbo.build/repo/docs/handbook/prisma
+# Database Package
 
 Note: Do not add packages by running `npm install` from this directory. Run it [from root](https://turbo.build/repo/docs/handbook/package-installation).
 

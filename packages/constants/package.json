@@ -12,7 +12,7 @@
   },
   "author": "",
   "dependencies": {
-    "typescript": "^4.8.3"
+    "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@lightski/eslint-config": "*",

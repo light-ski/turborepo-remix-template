@@ -7,31 +7,22 @@
   "source": "./src/index.ts",
   "scripts": {
     "clean": "rm -rf ./dist ./node_modules",
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:migrate:dev": "prisma migrate dev",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate",
-    "db:seed": "tsx src/seed.ts",
     "dev": "nodemon",
-    "format": "prisma format",
     "lint": "eslint \"src/**/*.ts\"",
-    "typecheck": "tsc --noEmit",
-    "studio": "prisma studio"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@prisma/client": "^4.11.0",
-    "nodemon": "^2.0.22"
+    "drizzle-orm": "^0.28.4",
+    "nodemon": "^2.0.22",
+    "postgres": "^3.3.5"
   },
   "devDependencies": {
     "@lightski/eslint-config": "*",
     "@lightski/tsconfig": "*",
     "@types/node": "^18.11.9",
+    "drizzle-kit": "^0.19.13",
     "eslint": "^8.28.0",
-    "prisma": "^4.11.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.8.3"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "typescript": "^5.0.4"
   }
 }
