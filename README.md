@@ -67,6 +67,13 @@ npx manypkg check
 npx manypkg fix
 ```
 
+If you want to clean your local packages and reinstall everything, run the following:
+
+```sh
+npm run clean
+npm install
+```
+
 ### Database Migrations
 
 We use Drizzle ORM to communicate with the database and `drizzle-kit` to [do migrations](https://orm.drizzle.team/docs/migrations). Here's the steps to take to make a DB schema change:
