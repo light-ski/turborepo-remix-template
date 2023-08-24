@@ -1,6 +1,0 @@
-{
-  "exec": "npm run db:generate",
-  "ext": null,
-  "ignore": "dist/",
-  "watch": ["."]
-}
