@@ -10,7 +10,7 @@ RUN mkdir /app
 WORKDIR /app
 RUN npm install -g turbo
 COPY . .
-RUN turbo prune --scope=@lightski/api --docker
+RUN turbo prune --scope=@lightski/bolt --docker
 
 # == Installer
 FROM base as installer
@@ -24,7 +24,7 @@ RUN npm clean-install
 # Build the project
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-RUN npx turbo run build --filter=@lightski/api
+RUN npx turbo run build --filter=@lightski/bolt
 
 # == Runner
 FROM base as runner
@@ -39,7 +39,7 @@ COPY --from=installer --chown=express:nodejs /app/ ./
 
 WORKDIR /app
 
-CMD ["npm", "run", "start", "--workspace=@lightski/api"]
+CMD ["npm", "run", "start", "--workspace=@lightski/bolt"]
 
 
 ## Below is the default Dockerfile created when you deploy an app to Fly.io

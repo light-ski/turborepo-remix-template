@@ -22,7 +22,7 @@ Turborepo also offers other helpful [examples](https://turbo.build/repo/docs/get
 
 ```sh
 cp apps/remix/.env.dev apps/remix/.env
-cp apps/api/.env.dev apps/api/.env
+cp apps/bolt/.env.dev apps/bolt/.env
 # Needs to be installed globally, since installing turbo locally also
 # tries to include it in our Dockerfile, which causes an error.
 npm install --global turbo
@@ -38,7 +38,7 @@ npm install
 npx turbo db:migrate:dev db:generate
 ```
 
-1. If you're doing development on the Slack App, navigate to `apps/api/README.md` and complete the steps there.
+1. If you're doing development on the Slack App, navigate to `apps/bolt/README.md` and complete the steps there.
 
 ## Development
 
@@ -47,7 +47,7 @@ npx turbo db:migrate:dev db:generate
 npm run dev
 
 # Run individual apps
-npm run dev --workspace={@lightski/remix, @lightski/api, ...}
+npm run dev --workspace={@lightski/remix, @lightski/bolt, ...}
 ```
 
 If you want to add a new internal package, follow the [Turborepo steps](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages) to do so. Make sure to add the package name to `apps/remix/remix.config.js` as well to properly transpile them.
@@ -57,7 +57,7 @@ If you want to add a new internal package, follow the [Turborepo steps](https://
 Turborepo enforces certain ways to install packages, even for routine tasks. When installing a package, make sure to go to the root `lightski` directory, and run:
 
 ```sh
-npm install PACKAGE_NAME --workspace={@lightski/remix, @lightski/api, @lightski/database, ...}
+npm install PACKAGE_NAME --workspace={@lightski/remix, @lightski/bolt, @lightski/database, ...}
 ```
 
 If you run into any issues around package versions, use [manypkg](https://www.npmjs.com/package/@manypkg/cli) to fix them:
@@ -149,7 +149,7 @@ Run deployment from the root directory with the following commands. They need to
 
 ```bash
 # Deploy API server
-fly deploy --config ./apps/api/fly.toml --dockerfile Dockerfile.apps.api
+fly deploy --config ./apps/bolt/fly.toml --dockerfile Dockerfile.apps.api
 
 # Deploy Remix app
 fly deploy --config ./apps/remix/fly.toml --dockerfile Dockerfile.apps.remix
@@ -159,7 +159,7 @@ fly deploy --config ./apps/remix/fly.toml --dockerfile Dockerfile.apps.remix
 
 ```sh
 # Append --local-only to do the docker build on your local computer
-fly deploy --config ./apps/api/fly.toml --dockerfile Dockerfile.apps.api --local-only
+fly deploy --config ./apps/bolt/fly.toml --dockerfile Dockerfile.apps.api --local-only
 
 # Destroy our remote builder machine if it's not responding
 fly apps destroy APP_NAME
