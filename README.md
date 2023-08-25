@@ -31,7 +31,7 @@ npm install
 ```
 
 1. Set up a local database by installing [Postgres.app](https://postgresapp.com/). The default database connection URL is `postgresql://postgres:example@localhost:5432/DB_NAME`
-1. Set `DATABASE_URL` and `DIRECT_URL` in both `.env` files to the connection URL. Note that you'll need to do this in all of the .env files you copied above. If you're not using [connection pooling](https://www.prisma.io/docs/guides/database/supabase) with your database provider, you can ignore `DIRECT_URL`.
+1. Set `DATABASE_URL` and `DIRECT_URL` in both `.env` files to the connection URL. Note that you'll need to do this in all of the .env files you copied above. If you're not using [connection pooling](https://supabase.com/docs/guides/database/connecting-to-postgres#connection-pooler) with your database provider, you can ignore `DIRECT_URL`. `DATABASE_URL` should be your pooled URL; `DIRECT_URL` is a direct URL.
 1. Migrate your database to the current state by doing:
 
 ```sh
@@ -76,15 +76,35 @@ npm install
 
 ### Database Migrations
 
-We use Drizzle ORM to communicate with the database and `drizzle-kit` to [do migrations](https://orm.drizzle.team/docs/migrations). Here's the steps to take to make a DB schema change:
+We use Drizzle ORM to communicate with the database and `drizzle-kit` to [do migrations](https://orm.drizzle.team/kit-docs/commands).
 
-**TBD**
+#### In Development
 
-```sh
-# Format schema
-prettier --write .
-# or just commit the file--formatting commit hooks are run automatically
-```
+When we're developing a new schema change, we don't want to create a migration just yet--we want to make schema changes directly on the database. To do so we use Drizzle ORM's `push` feature.
+
+1. Update `packages/database/src/schema.ts` to the latest schema.
+1. Run `npm run db:push`. You should see the changes applied to your local database, but no migration file should have been created. Run this command as often as you need--Drizzle will figure out how to update your local database to the schema in `schema.ts`.
+
+#### Generating a Migration
+
+Once we've decided on a particular schema change and want to commit the change, we need to create a migration for that change.
+
+1. Update `packages/database/src/schema.ts` to the latest schema.
+1. Run `npx ts-node packages/database/bin/migrate.ts` to commit the migration to your local database. This might not do anything if your database was already at the latest schema.
+1. Run `npx ts-node packages/database/bin/migrate.ts` to commit the migration to your local database.
+
+If you accidentally created a migration and want to remove it, run `npm run db:drop` in the root monorepo. Drizzle will ask you which migration to remove.
+
+#### Generating a Custom Migration
+
+For certain migrations (indexes, triggers, etc.) that aren't supported by Drizzle's `generate` feature, we may need to create it ourselves.
+
+1. In the root monorepo, run `npm run db:generate --custom`. This generates a custom migration in `packages/database/drizzle` that you can manually modify.
+
+#### Other Help
+
+- `npm run db:check` runs a consistency check
+- `npm run db:up` updates Drizzle's metadata to the latest version. Run this whenever Drizzle is upgraded.
 
 ### Editor Setup
 

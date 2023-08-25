@@ -6,13 +6,19 @@
       "outputs": ["build/**", "dist/**"],
       "cache": false
     },
+    "db:check": {
+      "cache": false
+    },
     "db:generate": {
       "cache": false
     },
     "db:push": {
       "cache": false
     },
-    "db:migrate:dev": {
+    "db:drop": {
+      "cache": false
+    },
+    "db:up": {
       "cache": false
     },
     "deploy": {

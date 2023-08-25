@@ -7,11 +7,15 @@
   "source": "./src/index.ts",
   "scripts": {
     "clean": "rm -rf ./dist ./node_modules",
+    "db:check": "drizzle-kit check:pg",
+    "db:drop": "drizzle-kit drop",
+    "db:generate": "drizzle-kit generate:pg",
+    "db:push": "drizzle-kit push:pg",
     "lint": "eslint \"src/**/*.ts\"",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "drizzle-orm": "^0.28.4",
+    "drizzle-orm": "^0.28.5",
     "postgres": "^3.3.5"
   },
   "devDependencies": {

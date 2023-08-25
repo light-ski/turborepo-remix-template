@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "turbo run build",
-    "clean": "turbo run clean && rm -rf package-lock.json node_modules out",
+    "clean": "turbo run clean && rm -rf ./package-lock.json ./node_modules ./out",
+    "db:check": "turbo run db:check",
+    "db:drop": "turbo run db:drop",
+    "db:generate": "turbo run db:generate",
+    "db:push": "turbo run db:push",
     "dev": "NODE_ENV=development turbo run dev",
     "lint": "turbo run lint",
     "prepare": "husky install",
