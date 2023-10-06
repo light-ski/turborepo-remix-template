@@ -7,7 +7,7 @@
     "build": "remix build",
     "clean": "rm -rf ./dist ./node_modules ./build ./.cache package-lock.json",
     "dev": "remix dev",
-    "start": "remix-serve build",
+    "start": "remix-serve ./build/index.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
