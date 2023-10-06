@@ -16,9 +16,9 @@ module.exports = {
   watchPaths: async () => {
     // Ensure we rebuild when we update a dependent package in the monorepo.
     return [
-      "./../../packages/constants",
-      "./../../packages/database",
-      "./../../packages/helpers",
+      "./../../packages/constants/src",
+      "./../../packages/database/src",
+      "./../../packages/helpers/src",
     ];
   },
   serverModuleFormat: "cjs",
