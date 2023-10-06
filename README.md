@@ -196,3 +196,7 @@ fly ssh console --app APP_NAME --select
 cd packages/database
 # TBD
 ```
+
+## Good References
+
+- [Information on PG Bouncer](https://jpcamara.com/2023/04/12/pgbouncer-is-useful.html)
